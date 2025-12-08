@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joel Whitford | Project Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --network-rail-orange: #ff6600;
+            --network-rail-blue: #0066cc;
+            --dark-bg: #0a0e1a;
+            --card-bg: #141824;
+            --text-primary: #ffffff;
+            --text-secondary: #a8b2d1;
+            --grid-color: rgba(255, 102, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--network-rail-orange);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--network-rail-orange);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero Section */
+        .portfolio-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .portfolio-hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--network-rail-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .portfolio-hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Project Showcase */
+        .project-showcase {
+            margin: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 8rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .project-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .project-number {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--network-rail-orange);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Project Content Layouts */
+        .project-content {
+            background: var(--card-bg);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 102, 0, 0.2);
+            padding: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-content:hover {
+            border-color: var(--network-rail-orange);
+            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.2);
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .project-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--network-rail-orange);
+        }
+
+        .project-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-text ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .project-text li {
+            padding: 0.7rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .project-text li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--network-rail-orange);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .project-visual {
+            position: relative;
+        }
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 2px solid var(--network-rail-orange);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .image-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        /* Stats Grid */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 102, 0, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 102, 0, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--network-rail-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Tags */
+        .project-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: var(--network-rail-orange);
+            font-weight: 600;
+        }
+
+        /* Full Width Layout */
+        .full-width {
+            text-align: center;
+        }
+
+        .full-width .project-visual {
+            margin: 2rem 0;
+        }
+
+        /* CTA Section */
+        .portfolio-cta {
+            text-align: center;
+            padding: 6rem 0;
+            margin: 4rem 0;
+        }
+
+        .portfolio-cta h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-cta p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--network-rail-orange);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
+            margin: 0 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--network-rail-orange);
+            margin: 0 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 102, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 102, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .image-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .project-content {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .portfolio-hero {
+                padding: 6rem 0 3rem;
+            }
+
+            .project-section {
+                margin-bottom: 4rem;
+            }
+
+            .image-grid,
+            .image-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Joel Whitford</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="mailto:Joel@Whitford.uk">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="portfolio-hero">
+        <div class="container">
+            <h1>Project Portfolio</h1>
+            <p>A showcase of improvement projects and digital transformation initiatives delivered across Network Rail</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Project 1: SharePoint Modernization -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 01</div>
+                <h2 class="project-title">SharePoint Modernization</h2>
+                <p class="project-subtitle">From paper-based chaos to digital collaboration</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>Teams relied on paper forms, email chains, and local file storage. No version control, difficult to find documents, and impossible to track workflow progress.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>Created standardized SharePoint sites with integrated workflows, document libraries with version control, and custom forms for common processes. Built templates that other teams could replicate.</p>
+                    
+                    <ul>
+                        <li>Automated approval workflows reducing turnaround time</li>
+                        <li>Centralized document management with full history</li>
+                        <li>Custom forms replacing 15+ paper-based processes</li>
+                        <li>Mobile access for field workers</li>
+                        <li>Integration with Power BI for real-time reporting</li>
+                    </ul>
+                    
+                    <div class="project-tags">
+                        <span class="tag">SharePoint</span>
+                        <span class="tag">Digital Transformation</span>
+                        <span class="tag">Workflow Automation</span>
+                        <span class="tag">Change Management</span>
+                    </div>
+                </div>
+                
+                <div class="project-visual">
+                    <img src="images/portfolio/sharepoint-workflow.png" alt="SharePoint Workflow" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 2: CMO Compliance -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 02</div>
+                <h2 class="project-title">CMO Compliance Management</h2>
+                <p class="project-subtitle">Streamlining safety-critical deficiency tracking</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-visual">
+                    <img src="images/portfolio/cmo-system.png" alt="CMO Compliance Dashboard" class="project-image">
+                </div>
+                
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>Legacy compliance tracking system required manual data entry and lacked clear accountability chains. Difficult to prioritize deficiencies or track resolution progress.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>Led implementation of new compliance management system with automated notifications, clear ownership assignment, and escalation pathways. Coordinated training for 100+ staff members.</p>
+                    
+                    <ul>
+                        <li>Automated deficiency tracking with email alerts</li>
+                        <li>Risk-based prioritization framework</li>
+                        <li>Real-time compliance dashboards for management</li>
+                        <li>Comprehensive training program ensuring adoption</li>
+                    </ul>
+                    
+                    <div class="project-tags">
+                        <span class="tag">ISO 45001</span>
+                        <span class="tag">Compliance</span>
+                        <span class="tag">Training Delivery</span>
+                        <span class="tag">Process Improvement</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 3: SINCS System -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 03</div>
+                <h2 class="project-title">Signalling Incident Control System (SINCS)</h2>
+                <p class="project-subtitle">Transforming safety-critical telecoms failure management</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>Three-year backlog of Safety Related Telecoms Failures (SRTFs) with no standardized process for tracking, managing, or learning from incidents. New engineers had no formal training framework.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>Redesigned the entire SINCS workflow, creating clear accountability chains and resolution processes aligned with ISO 45001 requirements. Developed comprehensive training materials that became the standard onboarding framework.</p>
+                    
+                    <div class="impact-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">3 Years</div>
+                            <div class="stat-label">Backlog Cleared</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Compliance Achieved</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Process Design</span>
+                        <span class="tag">ISO 45001</span>
+                        <span class="tag">Training Development</span>
+                        <span class="tag">Safety Critical</span>
+                    </div>
+                </div>
+                
+                <div class="project-visual">
+                    <img src="images/portfolio/sincs-main.png" alt="SINCS Dashboard" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 4: Track Worker Safety -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 04</div>
+                <h2 class="project-title">Track Worker Safety Initiative</h2>
+                <p class="project-subtitle">Enhancing safety through better communication systems</p>
+            </div>
+            
+            <div class="project-content">
+                <div class="full-width">
+                    <div class="project-text">
+                        <h3>The Challenge</h3>
+                        <p>Track workers depend on reliable communication equipment for safety-critical operations. Equipment failures or configuration issues could compromise worker safety.</p>
+                        
+                        <h3>The Solution</h3>
+                        <p>Analyzed track worker communication failures, identified systemic issues, and implemented improved testing procedures and maintenance schedules. Created field guides for rapid troubleshooting.</p>
+                    </div>
+                    
+                    <div class="image-grid-3">
+                        <img src="images/portfolio/track-safety-1.png" alt="Track Safety 1" class="project-image">
+                        <img src="images/portfolio/track-safety-2.png" alt="Track Safety 2" class="project-image">
+                        <img src="images/portfolio/track-safety-3.png" alt="Track Safety 3" class="project-image">
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Safety Critical</span>
+                        <span class="tag">Telecoms</span>
+                        <span class="tag">Process Improvement</span>
+                        <span class="tag">Field Operations</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 5: PowerApps Development -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 05</div>
+                <h2 class="project-title">PowerApps Development</h2>
+                <p class="project-subtitle">Building custom mobile solutions for field operations</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>Field teams needed mobile-friendly ways to submit data, access reference materials, and report issues without returning to the office.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>Developed custom PowerApps connected to SharePoint and Dataverse backends. Created intuitive interfaces optimized for mobile use with offline capability.</p>
+                    
+                    <ul>
+                        <li>Mobile-first design for field operations</li>
+                        <li>Offline data collection with automatic sync</li>
+                        <li>Integration with existing systems (Ellipse, SharePoint)</li>
+                        <li>Photo capture and GPS tagging capabilities</li>
+                    </ul>
+                    
+                    <div class="project-tags">
+                        <span class="tag">PowerApps</span>
+                        <span class="tag">Mobile Development</span>
+                        <span class="tag">Dataverse</span>
+                        <span class="tag">Field Operations</span>
+                    </div>
+                </div>
+                
+                <div class="project-visual">
+                    <div class="image-grid">
+                        <img src="images/portfolio/app-1.png" alt="Mobile App Interface 1" class="project-image">
+                        <img src="images/portfolio/app-2.png" alt="Mobile App Interface 2" class="project-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 6: Power BI Reporting -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 06</div>
+                <h2 class="project-title">Automated Power BI Reporting</h2>
+                <p class="project-subtitle">Replacing manual data collection with intelligent automation</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-visual">
+                    <img src="images/portfolio/powerbi-dashboard.png" alt="Power BI Dashboard" class="project-image">
+                </div>
+                
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>Managers spent hours each day manually extracting data from multiple systems, leaving less time for critical safety-focused tasks. Data was often inconsistent and difficult to analyze.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>Built automated Power BI dashboards that pull data directly from Ellipse and other core systems. Created real-time visualizations with drill-down capabilities for detailed analysis.</p>
+                    
+                    <ul>
+                        <li>Automated daily data refresh eliminating manual extraction</li>
+                        <li>Real-time KPI tracking with alert thresholds</li>
+                        <li>Mobile-responsive dashboards for field access</li>
+                        <li>Custom views for different management levels</li>
+                    </ul>
+                    
+                    <div class="impact-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">1 Hour</div>
+                            <div class="stat-label">Saved Per Manager Daily</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Dashboards Created</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Data Automation</span>
+                        <span class="tag">Analytics</span>
+                        <span class="tag">Efficiency</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 7: Predictive Analytics -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 07</div>
+                <h2 class="project-title">Predictive Site Analytics</h2>
+                <p class="project-subtitle">Identifying problems before they become failures</p>
+            </div>
+            
+            <div class="project-content">
+                <div class="full-width">
+                    <div class="project-text">
+                        <h3>The Challenge</h3>
+                        <p>Reactive maintenance approach meant addressing problems only after failures occurred. No systematic way to identify high-risk sites or predict potential issues.</p>
+                        
+                        <h3>The Solution</h3>
+                        <p>Used Power Query to analyze historical failure data, maintenance patterns, equipment age, and environmental factors. Developed risk scoring model that identified 61 problem sites across eastern England requiring targeted attention.</p>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">61</div>
+                            <div class="stat-label">Problem Sites Identified</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">Proactive</div>
+                            <div class="stat-label">Maintenance Enabled</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">Risk-Based</div>
+                            <div class="stat-label">Resource Allocation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-visual">
+                        <img src="images/portfolio/analytics-map.png" alt="Site Analytics Visualization" class="project-image">
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Power Query</span>
+                        <span class="tag">Predictive Analytics</span>
+                        <span class="tag">Risk Management</span>
+                        <span class="tag">Data Modeling</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 8: GSM-R Working Group -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 08</div>
+                <h2 class="project-title">GSM-R Working Group</h2>
+                <p class="project-subtitle">Collaborative problem-solving for critical rail communications</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-visual">
+                    <img src="images/portfolio/gsmr-collaboration.png" alt="GSM-R Working Group" class="project-image">
+                </div>
+                
+                <div class="project-text">
+                    <h3>The Initiative</h3>
+                    <p>Established cross-functional working group to address systemic GSM-R (railway radio) issues affecting multiple routes. Brought together technical experts, operations teams, and management.</p>
+                    
+                    <h3>The Impact</h3>
+                    <p>Created forum for sharing knowledge, identifying common problems, and developing standardized solutions. Improved communication between routes and accelerated issue resolution.</p>
+                    
+                    <ul>
+                        <li>Monthly cross-route collaboration sessions</li>
+                        <li>Shared problem database and solution library</li>
+                        <li>Standardized troubleshooting procedures</li>
+                        <li>Knowledge transfer reducing duplicate effort</li>
+                    </ul>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Collaboration</span>
+                        <span class="tag">GSM-R</span>
+                        <span class="tag">Knowledge Sharing</span>
+                        <span class="tag">Stakeholder Management</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 9: Branding & Communication -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 09</div>
+                <h2 class="project-title">Team Branding & Communications</h2>
+                <p class="project-subtitle">Building team identity and stakeholder engagement</p>
+            </div>
+            
+            <div class="project-content">
+                <div class="full-width">
+                    <div class="project-text">
+                        <h3>The Initiative</h3>
+                        <p>Created visual identity for telecoms team including mascot (the lego minifig!), branded templates, and communication materials. Made technical work more accessible and engaging for stakeholders.</p>
+                        
+                        <h3>The Impact</h3>
+                        <p>Improved team morale and visibility. Made reports and presentations more engaging, helping technical teams communicate effectively with non-technical audiences.</p>
+                    </div>
+                    
+                    <div class="image-grid">
+                        <img src="images/portfolio/branding-mascot.png" alt="Team Mascot" class="project-image">
+                        <img src="images/portfolio/branding-templates.png" alt="Branded Templates" class="project-image">
+                        <img src="images/portfolio/branding-materials.png" alt="Communication Materials" class="project-image">
+                        <img src="images/portfolio/branding-presentations.png" alt="Presentation Design" class="project-image">
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">Branding</span>
+                        <span class="tag">Communication</span>
+                        <span class="tag">Stakeholder Engagement</span>
+                        <span class="tag">Team Building</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 10: Systems Support Manager (Current Role) -->
+        <section class="project-section">
+            <div class="project-header">
+                <div class="project-number">Project 10</div>
+                <h2 class="project-title">Systems Support Manager Initiatives</h2>
+                <p class="project-subtitle">Current work in progress - Leading digital transformation at scale</p>
+            </div>
+            
+            <div class="project-content two-column">
+                <div class="project-text">
+                    <h3>The Challenge</h3>
+                    <p>[Describe the challenge you're currently tackling in your SSM role]</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>[Explain your approach and what you're implementing]</p>
+                    
+                    <ul>
+                        <li>[Key initiative or achievement 1]</li>
+                        <li>[Key initiative or achievement 2]</li>
+                        <li>[Key initiative or achievement 3]</li>
+                        <li>[Key initiative or achievement 4]</li>
+                    </ul>
+                    
+                    <div class="impact-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">[XX]</div>
+                            <div class="stat-label">[Metric 1]</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">[XX]</div>
+                            <div class="stat-label">[Metric 2]</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-tags">
+                        <span class="tag">[Tag 1]</span>
+                        <span class="tag">[Tag 2]</span>
+                        <span class="tag">[Tag 3]</span>
+                        <span class="tag">[Tag 4]</span>
+                    </div>
+                </div>
+                
+                <div class="project-visual">
+                    <img src="images/portfolio/ssm-project.png" alt="SSM Initiative" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="portfolio-cta">
+            <h2>Impressed?</h2>
+            <p>These are just highlights from my portfolio. Let's discuss how I can bring this same drive for improvement to your organization.</p>
+            <div>
+                <a href="mailto:Joel@Whitford.uk" class="btn btn-primary">Get In Touch</a>
+                <a href="index.html" class="btn btn-secondary">Back to CV</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Joel Whitford | Data-Driven Change Professional</p>
+    </footer>
+
+    <script>
+        // Scroll reveal animation
+        const projectSections = document.querySelectorAll('.project-section');
+        
+        function checkReveal() {
+            projectSections.forEach(section => {
+                const windowHeight = window.innerHeight;
+                const elementTop = section.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    section.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkReveal);
+        checkReveal(); // Check on load
+    </script>
+</body>
+</html>
