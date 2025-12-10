@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joel Whitford | Change Project Manager</title>
+    <title>Joel Whitford | eCV</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -42,17 +42,17 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+                linear-gradient(var(--grid-color) 2px, transparent 2px),
+                linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
             background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+            animation: gridPulse 4s ease-in-out infinite;
             z-index: 0;
             pointer-events: none;
         }
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
         /* Floating particles */
@@ -110,7 +110,7 @@
         .hero-mascot {
             flex: 0 0 400px;
             position: relative;
-            animation: slideInRight 1s ease-out, float 6s ease-in-out 1s infinite;
+            animation: slideInRight 1s ease-out, float 12s ease-in-out 1s infinite;
         }
 
         @keyframes slideInRight {
@@ -724,11 +724,11 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="eyebrow">🚄 Change Management Professional</div>
+                <div class="eyebrow">Understand Data | Drive Change</div>
                 <h1>Joel Whitford</h1>
-                <div class="subtitle">Data-Driven Change Project Manager</div>
+                <div class="subtitle">Data-Driven Change Professional</div>
                 <p class="hero-description">
-                    Transforming complex operational challenges into clear, deliverable change projects. 
+                    Nothing stays still - either we're improving or we're falling behind.<br><br>
                     APMG Change Management certified with 10+ years at Network Rail, specializing in 
                     digital transformation, process optimization, and stakeholder-driven delivery.
                 </p>
@@ -749,8 +749,8 @@
                 </div>
 
                 <div class="cta-group">
-                    <a href="mailto:Joel@Whitford.uk" class="btn btn-primary">Let's Connect</a>
-                    <a href="https://joel.whitford.uk" class="btn btn-secondary" target="_blank">View Portfolio</a>
+                    <a href="https://www.linkedin.com/in/joelwhitford93/" class="btn btn-primary">Linkedin</a>
+                    <a href="https://joel.whitford.uk/portfolio" class="btn btn-secondary" target="_blank">View Portfolio</a>
                 </div>
             </div>
 
@@ -829,7 +829,7 @@
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🚂</div>
+                    <div class="skill-icon">🚄</div>
                     <h3 class="skill-title">Rail Operational Knowledge</h3>
                     <ul class="skill-list">
                         <li>Safety-critical systems & communications</li>
@@ -1054,7 +1054,7 @@
 
         <!-- Footer CTA -->
         <section class="footer-cta reveal">
-            <h2>Ready to Drive Change Together?</h2>
+            <h2>Hiring?</h2>
             <p>
                 I'm currently seeking a Change Project Manager role where I can apply my blend of operational 
                 knowledge, change delivery experience, and digital innovation to improve performance, safety, 
@@ -1068,21 +1068,26 @@
     </div>
 
     <footer>
-        <p>© 2024 Joel Whitford | Built with passion for change management and digital innovation</p>
+        <p>© 2025 Joel Whitford | Nothing more to see here!</p>
     </footer>
 
     <script>
-        // Scroll reveal animation
+        // Scroll reveal animation with fade out
         const reveals = document.querySelectorAll('.reveal');
         
         function checkReveal() {
             reveals.forEach(reveal => {
                 const windowHeight = window.innerHeight;
                 const elementTop = reveal.getBoundingClientRect().top;
+                const elementBottom = reveal.getBoundingClientRect().bottom;
                 const elementVisible = 150;
                 
-                if (elementTop < windowHeight - elementVisible) {
+                // Add active class when entering viewport
+                if (elementTop < windowHeight - elementVisible && elementBottom > elementVisible) {
                     reveal.classList.add('active');
+                } else {
+                    // Remove active class when leaving viewport
+                    reveal.classList.remove('active');
                 }
             });
         }

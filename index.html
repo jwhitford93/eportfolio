@@ -524,11 +524,15 @@
             overflow: hidden;
         }
 
-        .cert-badge::before {
-            content: '✓';
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* New style for a centered tick mark at the bottom */
+        .cert-footer-icon {
+            display: flex;
+            justify-content: center; /* Centers the icon horizontally */
+            margin-top: 1rem; /* Adds separation from the text above */
+        }
+
+        .cert-status-icon {
+            /* Visual styling for the checkmark circle */
             width: 30px;
             height: 30px;
             background: var(--network-rail-orange);
@@ -538,6 +542,10 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.2rem;
+            color: var(--dark-bg); /* Use a dark color for the checkmark symbol */
+            
+            /* Remove any absolute positioning */
+            position: static;
         }
 
         .cert-badge:hover {
@@ -846,11 +854,72 @@
             <div class="section-header">
                 <h2 class="section-title">Professional Journey</h2>
                 <p class="section-subtitle">
-                    Rapid progression from apprentice to systems manager, driving digital transformation across Network Rail
+                    My 10-year journey from apprentice to systems manager, driving digital transformation across Network Rail
                 </p>
             </div>
 
             <div class="timeline">
+                <!-- ALL timeline items go here inside ONE timeline div -->
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2015 – 2018</div>
+                        <h3 class="timeline-title">Telecoms Engineering Technician Apprentice</h3>
+                        <div class="timeline-company">Network Rail</div>
+                        <p class="timeline-description">
+                            I trained at HMS Sultan in railway engineering with focus on safety and technical proficiency. 
+                            I spent two years working alongside the telecoms maintenance team, where I gained 
+                            extensive trackside experience performing fault repair and maintenance duties on 
+                            operational railway systems.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2018 – June 2020</div>
+                        <h3 class="timeline-title">Control Centre Technician (Telecoms)</h3>
+                        <div class="timeline-company">Network Rail</div>
+                        <p class="timeline-description">
+                            I was fortunate to graduate from my apprenticeship into my first role as a band 5 technician. 
+                            In this role, I ensured reliability of telecoms equipment at York Campus, a critical hub for train 
+                            signalling across the eastern region. Together with the team, I maintained high safety standards in fast-paced 
+                            operational environment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">June 2020 – July 2023</div>
+                        <h3 class="timeline-title">Assistant Route Communications Engineer</h3>
+                        <div class="timeline-company">Network Rail</div>
+                        <p class="timeline-description">
+                            I helped manage a team of 100+ staff in maintaining safety-critical telecoms infrastructure.
+                            In this role I worked from the Scottish Borders down to London Kings Cross. 
+                            In this role I cleared a three-year backlog of incident reports and implemented a new compliance management system 
+                            aligned with ISO 45001, creating training templates still in use today.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">July 2023 – February 2025</div>
+                        <h3 class="timeline-title">Asset Engineer (Secondment)</h3>
+                        <div class="timeline-company">Network Rail</div>
+                        <p class="timeline-description">
+                            I took a secondment as an Asset Engineer in the regional telecoms team. Here,Developed automated Power BI reporting tools, saving managers 1 hour per day on safety-critical 
+                            tasks. Applied Power Query analytics to identify 61 problem sites across eastern England, 
+                            enabling targeted maintenance interventions.
+                        </p>
+                    </div>
+                </div>
+
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -864,65 +933,8 @@
                         </p>
                     </div>
                 </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">July 2023 – February 2025</div>
-                        <h3 class="timeline-title">Asset Engineer (Secondment)</h3>
-                        <div class="timeline-company">Network Rail</div>
-                        <p class="timeline-description">
-                            Developed automated Power BI reporting tools, saving managers 1 hour per day on safety-critical 
-                            tasks. Applied Power Query analytics to identify 61 problem sites across eastern England, 
-                            enabling targeted maintenance interventions.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">June 2020 – July 2023</div>
-                        <h3 class="timeline-title">Assistant Route Communications Engineer</h3>
-                        <div class="timeline-company">Network Rail</div>
-                        <p class="timeline-description">
-                            Managed team of 100+ staff maintaining safety-critical telecoms infrastructure. Cleared 
-                            three-year backlog of incident reports and implemented new compliance management system 
-                            aligned with ISO 45001, creating training templates still in use today.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2018 – June 2020</div>
-                        <h3 class="timeline-title">Control Centre Technician (Telecoms)</h3>
-                        <div class="timeline-company">Network Rail</div>
-                        <p class="timeline-description">
-                            Ensured reliability of telecoms equipment at York Campus, a critical hub for train 
-                            signalling across the eastern region. Maintained high safety standards in fast-paced 
-                            operational environment.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2015 – 2018</div>
-                        <h3 class="timeline-title">Telecoms Engineering Technician Apprentice</h3>
-                        <div class="timeline-company">Network Rail</div>
-                        <p class="timeline-description">
-                            Trained at HMS Sultan in railway engineering with focus on safety and technical proficiency. 
-                            Gained extensive trackside experience performing fault repair and maintenance duties on 
-                            operational railway systems.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            </div>  <!-- Close timeline div here -->
         </section>
-
         <!-- Key Projects -->
         <section class="section reveal">
             <div class="section-header">
@@ -1018,37 +1030,55 @@
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         Foundation & Practitioner
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
                 <div class="cert-badge">
                     <div class="cert-name">CMI CPD</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         In Progress
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
                 <div class="cert-badge">
                     <div class="cert-name">APM Membership</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         Application in Progress
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
                 <div class="cert-badge">
                     <div class="cert-name">BTEC Railway Engineering</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         Level 3
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
                 <div class="cert-badge">
                     <div class="cert-name">NVQ Engineering Operations</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         Level 3
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
                 <div class="cert-badge">
                     <div class="cert-name">ILM Leadership & Management</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                         Level 3
                     </div>
+                    <div class="cert-footer-icon"><span class="cert-status-icon">✓</span></div>
                 </div>
+                <div class="cert-badge">
+                    <div class="cert-name">Lean Six Sigma</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                        Coming Soon!
+                    </div>
+                </div>
+                <div class="cert-badge">
+                    <div class="cert-name">APM Project Management Qualification</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                        Coming Soon!
+                </div>
+                
             </div>
         </section>
 
@@ -1062,7 +1092,7 @@
             </p>
             <div class="cta-group" style="justify-content: center;">
                 <a href="mailto:Joel@Whitford.uk" class="btn btn-primary">Get In Touch</a>
-                <a href="https://joel.whitford.uk" class="btn btn-secondary" target="_blank">Explore Full Portfolio</a>
+                <a href="https://joel.whitford.uk/portfolio" class="btn btn-secondary" target="_blank">Explore Full Portfolio</a>
             </div>
         </section>
     </div>
