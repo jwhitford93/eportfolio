@@ -7,418 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --network-rail-orange: #ff6600;
-            --network-rail-blue: #0066cc;
-            --dark-bg: #0a0e1a;
-            --card-bg: #141824;
-            --text-primary: #ffffff;
-            --text-secondary: #a8b2d1;
-            --grid-color: rgba(255, 102, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated grid background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-color) 2px, transparent 2px),
-                linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
-            background-size: 50px 50px;
-            animation: gridPulse 4s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 14, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 102, 0, 0.2);
-            padding: 1rem 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--network-rail-orange);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--network-rail-orange);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Hero Section */
-        .portfolio-hero {
-            padding: 8rem 0 4rem;
-            text-align: center;
-        }
-
-        .portfolio-hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--network-rail-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .portfolio-hero p {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Project Showcase */
-        .project-showcase {
-            margin: 4rem 0;
-        }
-
-        .project-section {
-            margin-bottom: 8rem;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .project-section.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .project-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .project-number {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--network-rail-orange);
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .project-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .project-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Project Content Layouts */
-        .project-content {
-            background: var(--card-bg);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            padding: 3rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-content:hover {
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.2);
-        }
-
-        /* Two Column Layout */
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .project-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--network-rail-orange);
-        }
-
-        .project-text p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-text ul {
-            list-style: none;
-            margin-top: 1.5rem;
-        }
-
-        .project-text li {
-            padding: 0.7rem 0;
-            color: var(--text-secondary);
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .project-text li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--network-rail-orange);
-            font-weight: bold;
-            font-size: 1.3rem;
-        }
-
-        .project-visual {
-            position: relative;
-        }
-
-        .project-image {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            border: 2px solid var(--network-rail-orange);
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .image-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-
-        /* Stats Grid */
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 102, 0, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 102, 0, 0.3);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--network-rail-orange);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* Tags */
-        .project-tags {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-
-        .tag {
-            padding: 0.5rem 1.2rem;
-            background: rgba(255, 102, 0, 0.1);
-            border: 1px solid rgba(255, 102, 0, 0.3);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            color: var(--network-rail-orange);
-            font-weight: 600;
-        }
-
-        /* Full Width Layout */
-        .full-width {
-            text-align: center;
-        }
-
-        .full-width .project-visual {
-            margin: 2rem 0;
-        }
-
-        /* CTA Section */
-        .portfolio-cta {
-            text-align: center;
-            padding: 6rem 0;
-            margin: 4rem 0;
-        }
-
-        .portfolio-cta h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .portfolio-cta p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .btn-primary {
-            background: var(--network-rail-orange);
-            color: white;
-            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
-            margin: 0 0.5rem;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--network-rail-orange);
-            margin: 0 0.5rem;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 102, 0, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 0;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 102, 0, 0.2);
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .two-column {
-                grid-template-columns: 1fr;
-            }
-
-            .image-grid-3 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .project-content {
-                padding: 2rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .portfolio-hero {
-                padding: 6rem 0 3rem;
-            }
-
-            .project-section {
-                margin-bottom: 4rem;
-            }
-
-            .image-grid,
-            .image-grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .impact-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -437,30 +26,149 @@
     <section class="portfolio-hero">
         <div class="container">
             <h1>Project Portfolio</h1>
-            <p>A showcase of improvement projects and digital transformation initiatives delivered across Network Rail</p>
+            <p>Click any project to explore in detail</p>
         </div>
     </section>
 
+    <!-- Projects Grid -->
     <div class="container">
-        <!-- Project 1: SharePoint Modernization -->
-        <section class="project-section">
-            <div class="project-header">
+        <div class="projects-grid">
+            <!-- Project Card 1 -->
+            <div class="project-card" onclick="openModal('modal1')">
                 <div class="project-number">Project 01</div>
-                <h2 class="project-title">SharePoint Modernization</h2>
-                <p class="project-subtitle">From paper-based chaos to digital collaboration</p>
+                <h3 class="project-card-title">File Sharing Modernization</h3>
+                <p class="project-card-subtitle">From paper-based chaos to digital collaboration</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">SharePoint</span>
+                    <span class="tag-small">Digital Transformation</span>
+                </div>
             </div>
-            
-            <div class="project-content two-column">
+
+            <!-- Project Card 2 -->
+            <div class="project-card" onclick="openModal('modal2')">
+                <div class="project-number">Project 02</div>
+                <h3 class="project-card-title">Compliance Tracking</h3>
+                <p class="project-card-subtitle">Streamlining safety-critical deficiency tracking</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">ISO 45001</span>
+                    <span class="tag-small">Compliance</span>
+                </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div class="project-card" onclick="openModal('modal3')">
+                <div class="project-number">Project 03</div>
+                <h3 class="project-card-title">Safety Related Faulting System</h3>
+                <p class="project-card-subtitle">Transforming safety-critical telecoms failure management</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Process Design</span>
+                    <span class="tag-small">ISO 45001</span>
+                </div>
+            </div>
+
+            <!-- Continue for all 11 projects... -->
+            <div class="project-card" onclick="openModal('modal4')">
+                <div class="project-number">Project 04</div>
+                <h3 class="project-card-title">Track Worker Safety</h3>
+                <p class="project-card-subtitle">Enhancing safety through better communication</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Safety Critical</span>
+                    <span class="tag-small">Telecoms</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal5')">
+                <div class="project-number">Project 05</div>
+                <h3 class="project-card-title">App Development</h3>
+                <p class="project-card-subtitle">Building custom mobile solutions for field operations</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">PowerApps</span>
+                    <span class="tag-small">Mobile</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal6')">
+                <div class="project-number">Project 06</div>
+                <h3 class="project-card-title">Automated Business Intelligence</h3>
+                <p class="project-card-subtitle">Replacing manual data collection with beautiful automated dashboards</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Power BI</span>
+                    <span class="tag-small">Automation</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal7')">
+                <div class="project-number">Project 07</div>
+                <h3 class="project-card-title">Predictive Site Analytics</h3>
+                <p class="project-card-subtitle">Identifying problems before they become failures</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Power Query</span>
+                    <span class="tag-small">Analytics</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal8')">
+                <div class="project-number">Project 08</div>
+                <h3 class="project-card-title">Failure Trend Working Group</h3>
+                <p class="project-card-subtitle">Collaborative problem-solving for critical radio comms</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Collaboration</span>
+                    <span class="tag-small">GSM-R</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal9')">
+                <div class="project-number">Project 09</div>
+                <h3 class="project-card-title">Team Branding</h3>
+                <p class="project-card-subtitle">Building team identity and stakeholder engagement</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">Branding</span>
+                    <span class="tag-small">Communication</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal10')">
+                <div class="project-number">Project 10</div>
+                <h3 class="project-card-title">Fibre Allocations</h3>
+                <p class="project-card-subtitle">Streamlining fibre change requests</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">PowerApps</span>
+                    <span class="tag-small">Process Redesign</span>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openModal('modal11')">
+                <div class="project-number">Project 11</div>
+                <h3 class="project-card-title">Workload Management</h3>
+                <p class="project-card-subtitle">Leading digital transformation at scale</p>
+                <div class="project-card-tags">
+                    <span class="tag-small">In Progress</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal 1: File Sharing Modernization -->
+    <div id="modal1" class="modal" onclick="closeModalOnBackground(event, 'modal1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal1')">×</button>
+            <div class="modal-header">
+                <div class="project-number">Project 01</div>
+                <h2 class="modal-title">File Sharing Modernization</h2>
+                <p class="modal-subtitle">From paper-based chaos to digital collaboration</p>
+            </div>
+
+            <div class="two-column">
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>Before COVID, our team relied on paper forms, email chains, and local file storage. This left us in a poor position when the lockdowns came into effect. <br> No version control, difficult to find documents, and impossible to track workflow progress.</p>
+                    <p>The organization relied heavily on paper forms, email chains, and local file storage. When remote work became necessary, teams had no version control, struggled to find documents, and couldn't track workflow progress.</p>
                     
                     <h3>The Solution</h3>
-                    <p>Created standardized SharePoint sites with integrated workflows, document libraries with version control, and custom forms for common processes. Built templates that other teams could replicate.</p>
+                    <p>Created standardized SharePoint sites with integrated workflows, document libraries with version control, and custom forms for common processes. Built templates that other teams could replicate across the organization.</p>
                     
                     <ul>
                         <li>Automated approval workflows reducing turnaround time</li>
-                        <li>Centralized document management with full history</li>
+                        <li>Centralized document management with full audit history</li>
                         <li>Custom forms replacing 15+ paper-based processes</li>
                         <li>Mobile access for field workers</li>
                         <li>Integration with Power BI for real-time reporting</li>
@@ -478,27 +186,30 @@
                     <img src="images/sharepoint-workflow.png" alt="SharePoint Workflow" class="project-image">
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 2: CMO Compliance -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 2: Compliance Tracking -->
+    <div id="modal2" class="modal" onclick="closeModalOnBackground(event, 'modal2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal2')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 02</div>
-                <h2 class="project-title">CMO Compliance Management</h2>
-                <p class="project-subtitle">Streamlining safety-critical deficiency tracking</p>
+                <h2 class="modal-title">Compliance Management System</h2>
+                <p class="modal-subtitle">Streamlining safety-critical deficiency tracking</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-visual">
-                    <img src="images/cmo-system.png" alt="CMO Compliance Dashboard" class="project-image">
+                    <img src="images/cmo-system.png" alt="Compliance Dashboard" class="project-image">
                 </div>
                 
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>Legacy compliance tracking system required manual data entry and lacked clear accountability chains. Difficult to prioritize deficiencies or track resolution progress.</p>
+                    <p>Legacy compliance tracking system required manual data entry and lacked clear accountability chains. Teams struggled to prioritize deficiencies and track resolution progress effectively.</p>
                     
                     <h3>The Solution</h3>
-                    <p>Led implementation of new compliance management system with automated notifications, clear ownership assignment, and escalation pathways. Coordinated training for 100+ staff members.</p>
+                    <p>Led implementation of new compliance management system with automated notifications, clear ownership assignment, and escalation pathways. Coordinated training for 100+ staff members across multiple departments.</p>
                     
                     <ul>
                         <li>Automated deficiency tracking with email alerts</li>
@@ -515,23 +226,26 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 3: SINCS System -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 3: Safety Related Faulting System -->
+    <div id="modal3" class="modal" onclick="closeModalOnBackground(event, 'modal3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal3')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 03</div>
-                <h2 class="project-title">Signalling Incident Control System (SINCS)</h2>
-                <p class="project-subtitle">Transforming safety-critical telecoms failure management</p>
+                <h2 class="modal-title">Safety Related Faulting System</h2>
+                <p class="modal-subtitle">Transforming safety-critical failure management</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>Three-year backlog of Safety Related Telecoms Failures (SRTFs) with no standardized process for tracking, managing, or learning from incidents. New engineers had no formal training framework.</p>
+                    <p>Three-year backlog of safety-related failures with no standardized process for tracking, managing, or learning from incidents. New team members had no formal training framework.</p>
                     
                     <h3>The Solution</h3>
-                    <p>Redesigned the entire SINCS workflow, creating clear accountability chains and resolution processes aligned with ISO 45001 requirements. Developed comprehensive training materials that became the standard onboarding framework.</p>
+                    <p>Redesigned the entire workflow, creating clear accountability chains and resolution processes aligned with ISO 45001 requirements. Developed comprehensive training materials that became the standard onboarding framework.</p>
                     
                     <div class="impact-stats">
                         <div class="stat-box">
@@ -553,65 +267,71 @@
                 </div>
                 
                 <div class="project-visual">
-                    <img src="images/sincs-main.png" alt="SINCS Dashboard" class="project-image">
+                    <img src="images/sincs-main.png" alt="Safety System Dashboard" class="project-image">
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 4: Track Worker Safety -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 4: Track Worker Safety -->
+    <div id="modal4" class="modal" onclick="closeModalOnBackground(event, 'modal4')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal4')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 04</div>
-                <h2 class="project-title">Track Worker Safety Initiative</h2>
-                <p class="project-subtitle">Enhancing safety through better communication systems</p>
+                <h2 class="modal-title">Worker Safety Communications Initiative</h2>
+                <p class="modal-subtitle">Enhancing safety through better communication systems</p>
             </div>
-            
+
             <div class="project-content">
                 <div class="full-width">
                     <div class="project-text">
                         <h3>The Challenge</h3>
-                        <p>Track workers depend on reliable communication equipment for safety-critical operations. Equipment failures or configuration issues could compromise worker safety.</p>
+                        <p>Field workers depend on reliable communication equipment for safety-critical operations. Equipment failures or configuration issues could compromise worker safety and operational efficiency.</p>
                         
                         <h3>The Solution</h3>
-                        <p>Analyzed track worker communication failures, identified systemic issues, and implemented improved testing procedures and maintenance schedules. Created field guides for rapid troubleshooting.</p>
+                        <p>Analyzed communication failures, identified systemic issues, and implemented improved testing procedures and maintenance schedules. Created field guides for rapid troubleshooting to minimize downtime.</p>
                     </div>
                     
                     <div class="image-grid-3">
-                        <img src="images/track-safety-1.png" alt="Track Safety 1" class="project-image">
-                        <img src="images/track-safety-2.png" alt="Track Safety 2" class="project-image">
-                        <img src="images/track-safety-3.png" alt="Track Safety 3" class="project-image">
+                        <img src="images/track-safety-1.png" alt="Safety Communications 1" class="project-image">
+                        <img src="images/track-safety-2.png" alt="Safety Communications 2" class="project-image">
+                        <img src="images/track-safety-3.png" alt="Safety Communications 3" class="project-image">
                     </div>
                     
                     <div class="project-tags">
                         <span class="tag">Safety Critical</span>
-                        <span class="tag">Telecoms</span>
+                        <span class="tag">Communications</span>
                         <span class="tag">Process Improvement</span>
                         <span class="tag">Field Operations</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 5: PowerApps Development -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 5: App Development -->
+    <div id="modal5" class="modal" onclick="closeModalOnBackground(event, 'modal5')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal5')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 05</div>
-                <h2 class="project-title">PowerApps Development</h2>
-                <p class="project-subtitle">Building custom mobile solutions for field operations</p>
+                <h2 class="modal-title">Mobile Application Development</h2>
+                <p class="modal-subtitle">Building custom mobile solutions for field operations</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>Field teams needed mobile-friendly ways to submit data, access reference materials, and report issues without returning to the office.</p>
+                    <p>Field teams needed mobile-friendly ways to submit data, access reference materials, and report issues without returning to the office, reducing productivity and increasing turnaround time.</p>
                     
                     <h3>The Solution</h3>
-                    <p>Developed custom PowerApps connected to SharePoint and Dataverse backends. Created intuitive interfaces optimized for mobile use with offline capability.</p>
+                    <p>Developed custom PowerApps connected to centralized databases. Created intuitive interfaces optimized for mobile use with offline capability, ensuring field workers could operate in areas with limited connectivity.</p>
                     
                     <ul>
                         <li>Mobile-first design for field operations</li>
                         <li>Offline data collection with automatic sync</li>
-                        <li>Integration with existing systems (Ellipse, SharePoint)</li>
+                        <li>Integration with existing enterprise systems</li>
                         <li>Photo capture and GPS tagging capabilities</li>
                     </ul>
                     
@@ -630,38 +350,41 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 6: Power BI Reporting -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 6: Power BI Reporting -->
+    <div id="modal6" class="modal" onclick="closeModalOnBackground(event, 'modal6')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal6')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 06</div>
-                <h2 class="project-title">Automated Power BI Reporting</h2>
-                <p class="project-subtitle">Replacing manual data collection with intelligent automation</p>
+                <h2 class="modal-title">Automated Business Intelligence Reporting</h2>
+                <p class="modal-subtitle">Replacing manual data collection with intelligent automation</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-visual">
                     <img src="images/powerbi-dashboard.png" alt="Power BI Dashboard" class="project-image">
                 </div>
                 
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>Managers spent hours each day manually extracting data from multiple systems, leaving less time for critical safety-focused tasks. Data was often inconsistent and difficult to analyze.</p>
+                    <p>Managers spent hours each day manually extracting data from multiple systems, leaving less time for critical decision-making tasks. Data was often inconsistent and difficult to analyze effectively.</p>
                     
                     <h3>The Solution</h3>
-                    <p>Built automated Power BI dashboards that pull data directly from Ellipse and other core systems. Created real-time visualizations with drill-down capabilities for detailed analysis.</p>
+                    <p>Built beautiful, automated Power BI dashboards that pull data directly from core enterprise systems. Created real-time visualizations with drill-down capabilities for detailed analysis and data-driven decision making.</p>
                     
                     <ul>
                         <li>Automated daily data refresh eliminating manual extraction</li>
                         <li>Real-time KPI tracking with alert thresholds</li>
-                        <li>Mobile-responsive dashboards for field access</li>
+                        <li>Mobile-responsive dashboards for executive access</li>
                         <li>Custom views for different management levels</li>
                     </ul>
                     
                     <div class="impact-stats">
                         <div class="stat-box">
-                            <div class="stat-value">1 Hour</div>
+                            <div class="stat-value">~ 1 Hour</div>
                             <div class="stat-label">Saved Per Manager Daily</div>
                         </div>
                         <div class="stat-box">
@@ -678,24 +401,27 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 7: Predictive Analytics -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 7: Predictive Site Analytics -->
+    <div id="modal7" class="modal" onclick="closeModalOnBackground(event, 'modal7')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal7')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 07</div>
-                <h2 class="project-title">Predictive Site Analytics</h2>
-                <p class="project-subtitle">Identifying problems before they become failures</p>
+                <h2 class="modal-title">Predictive Site Analytics</h2>
+                <p class="modal-subtitle">Identifying problems before they become failures</p>
             </div>
-            
+
             <div class="project-content">
                 <div class="full-width">
                     <div class="project-text">
                         <h3>The Challenge</h3>
-                        <p>Reactive maintenance approach meant addressing problems only after failures occurred. No systematic way to identify high-risk sites or predict potential issues.</p>
+                        <p>Reactive maintenance approach meant addressing problems only after failures occurred, resulting in costly downtime. There was no systematic way to identify high-risk sites or predict potential issues.</p>
                         
                         <h3>The Solution</h3>
-                        <p>Used Power Query to analyze historical failure data, maintenance patterns, equipment age, and environmental factors. Developed risk scoring model that identified 61 problem sites across eastern England requiring targeted attention.</p>
+                        <p>Used Power Query to analyze historical failure data, maintenance patterns, equipment age, and environmental factors. Developed risk scoring model that identified 61 high-risk sites requiring targeted preventative attention.</p>
                     </div>
                     
                     <div class="impact-stats">
@@ -712,11 +438,7 @@
                             <div class="stat-label">Resource Allocation</div>
                         </div>
                     </div>
-                    
-                    <div class="project-visual">
-                        <img src="images/analytics-map.png" alt="Site Analytics Visualization" class="project-image">
-                    </div>
-                    
+                                    
                     <div class="project-tags">
                         <span class="tag">Power Query</span>
                         <span class="tag">Predictive Analytics</span>
@@ -725,30 +447,33 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 8: GSM-R Working Group -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 8: Failure Trend Working Group -->
+    <div id="modal8" class="modal" onclick="closeModalOnBackground(event, 'modal8')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal8')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 08</div>
-                <h2 class="project-title">GSM-R Working Group</h2>
-                <p class="project-subtitle">Collaborative problem-solving for critical rail communications</p>
+                <h2 class="modal-title">Failure Trend Working Group</h2>
+                <p class="modal-subtitle">Collaborative problem-solving for critical communications</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-visual">
-                    <img src="images/gsmr-collaboration.png" alt="GSM-R Working Group" class="project-image">
+                    <img src="images/gsmr-collaboration.png" alt="Working Group Collaboration" class="project-image">
                 </div>
                 
                 <div class="project-text">
                     <h3>The Initiative</h3>
-                    <p>Established cross-functional working group to address systemic GSM-R (railway radio) issues affecting multiple routes. Brought together technical experts, operations teams, and management.</p>
+                    <p>Established cross-functional working group to address systemic communications issues affecting multiple operational areas. Brought together technical experts, operations teams, and management to tackle recurring problems.</p>
                     
                     <h3>The Impact</h3>
-                    <p>Created forum for sharing knowledge, identifying common problems, and developing standardized solutions. Improved communication between routes and accelerated issue resolution.</p>
+                    <p>Created forum for sharing knowledge, identifying common problems, and developing standardized solutions. Improved communication between departments and accelerated issue resolution across the organization.</p>
                     
                     <ul>
-                        <li>Monthly cross-route collaboration sessions</li>
+                        <li>Monthly cross-departmental collaboration sessions</li>
                         <li>Shared problem database and solution library</li>
                         <li>Standardized troubleshooting procedures</li>
                         <li>Knowledge transfer reducing duplicate effort</li>
@@ -756,30 +481,33 @@
                     
                     <div class="project-tags">
                         <span class="tag">Collaboration</span>
-                        <span class="tag">GSM-R</span>
+                        <span class="tag">Cross-Functional</span>
                         <span class="tag">Knowledge Sharing</span>
                         <span class="tag">Stakeholder Management</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 9: Branding & Communication -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 9: Team Branding -->
+    <div id="modal9" class="modal" onclick="closeModalOnBackground(event, 'modal9')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal9')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 09</div>
-                <h2 class="project-title">Team Branding & Communications</h2>
-                <p class="project-subtitle">Building team identity and stakeholder engagement</p>
+                <h2 class="modal-title">Team Branding & Communications</h2>
+                <p class="modal-subtitle">Building team identity and stakeholder engagement</p>
             </div>
-            
+
             <div class="project-content">
                 <div class="full-width">
                     <div class="project-text">
                         <h3>The Initiative</h3>
-                        <p>Created visual identity for telecoms team including mascot (the lego minifig!), branded templates, and communication materials. Made technical work more accessible and engaging for stakeholders.</p>
+                        <p>Created visual identity for technical team including mascot, branded templates, and communication materials. Made technical work more accessible and engaging for non-technical stakeholders across the organization.</p>
                         
                         <h3>The Impact</h3>
-                        <p>Improved team morale and visibility. Made reports and presentations more engaging, helping technical teams communicate effectively with non-technical audiences.</p>
+                        <p>Improved team morale and visibility within the organization. Made reports and presentations more engaging, helping technical teams communicate effectively with executive leadership and non-technical audiences.</p>
                     </div>
                     
                     <div class="image-grid">
@@ -797,16 +525,19 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 10: Fibre Allocations Requests -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 10: Fibre Allocations -->
+    <div id="modal10" class="modal" onclick="closeModalOnBackground(event, 'modal10')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal10')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 10</div>
-                <h2 class="project-title">Fibre Allocations Redesign</h2>
-                <p class="project-subtitle">Streamlining the process for fibre change requests</p>
+                <h2 class="modal-title">Infrastructure Change Request Redesign</h2>
+                <p class="modal-subtitle">Streamlining the approval process for infrastructure changes</p>
             </div>
-            
+
             <div class="project-content">
                 <div class="full-width">
                     <div class="project-text">
@@ -821,19 +552,19 @@
                             <ul style="list-style: none; padding: 0;">
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: #ff4444;">✗</span>
-                                    [Old step 1 - e.g., Email requests to multiple people]
+                                    Email requests to multiple approvers with unclear chains
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: #ff4444;">✗</span>
-                                    [Old step 2 - e.g., Manual spreadsheet updates]
+                                    Manual spreadsheet updates prone to errors
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: #ff4444;">✗</span>
-                                    [Old step 3 - e.g., Phone calls for approvals]
+                                    Phone calls chasing approvals causing delays
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: #ff4444;">✗</span>
-                                    [Old step 4 - e.g., Manual documentation]
+                                    No audit trail or documentation of decisions
                                 </li>
                             </ul>
                         </div>
@@ -843,19 +574,19 @@
                             <ul style="list-style: none; padding: 0;">
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: var(--network-rail-orange); font-weight: bold;">▹</span>
-                                    [New step 1 - e.g., Single PowerApp submission]
+                                    Single PowerApp submission with guided workflow
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: var(--network-rail-orange); font-weight: bold;">▹</span>
-                                    [New step 2 - e.g., Automated routing & approvals]
+                                    Automated routing to appropriate approvers
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: var(--network-rail-orange); font-weight: bold;">▹</span>
-                                    [New step 3 - e.g., Instant notifications]
+                                    Instant email notifications at each stage
                                 </li>
                                 <li style="padding: 0.7rem 0; color: var(--text-secondary); position: relative; padding-left: 2rem;">
                                     <span style="position: absolute; left: 0; color: var(--network-rail-orange); font-weight: bold;">▹</span>
-                                    [New step 4 - e.g., Automatic audit trail]
+                                    Complete audit trail with timestamps and reasons
                                 </li>
                             </ul>
                         </div>
@@ -863,22 +594,22 @@
                     
                     <!-- App Screenshot -->
                     <div class="project-visual">
-                        <img src="images/fibre-app.png" alt="Fibre Allocations PowerApp" class="project-image">
+                        <img src="images/fibre-app.png" alt="Infrastructure Change PowerApp" class="project-image">
                     </div>
                     
                     <!-- Impact Stats -->
                     <div class="impact-stats">
                         <div class="stat-box">
-                            <div class="stat-value">[XX%]</div>
+                            <div class="stat-value">75%</div>
                             <div class="stat-label">Time Reduction</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-value">[XX]</div>
+                            <div class="stat-value">200+</div>
                             <div class="stat-label">Requests Processed</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-value">[XX hrs]</div>
-                            <div class="stat-label">Manual Work Eliminated</div>
+                            <div class="stat-value">40 hrs</div>
+                            <div class="stat-label">Monthly Admin Time Saved</div>
                         </div>
                     </div>
                     
@@ -890,65 +621,58 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Project 11: Systems Support Manager (Current Role) -->
-        <section class="project-section">
-            <div class="project-header">
+    <!-- Modal 11: Workload Management -->
+    <div id="modal11" class="modal" onclick="closeModalOnBackground(event, 'modal11')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal11')">×</button>
+            <div class="modal-header">
                 <div class="project-number">Project 11</div>
-                <h2 class="project-title">Systems Support Manager Initiatives</h2>
-                <p class="project-subtitle">Current work in progress - Leading digital transformation at scale</p>
+                <h2 class="modal-title">Enterprise Workload Management System</h2>
+                <p class="modal-subtitle">Leading digital transformation at organizational scale</p>
             </div>
-            
-            <div class="project-content two-column">
+
+            <div class="two-column">
                 <div class="project-text">
                     <h3>The Challenge</h3>
-                    <p>[Describe the challenge you're currently tackling in your SSM role]</p>
+                    <p>Multiple teams managing workload through disparate systems, creating visibility gaps and preventing effective resource allocation across the organization. Leadership lacked consolidated view of operational capacity.</p>
                     
                     <h3>The Solution</h3>
-                    <p>[Explain your approach and what you're implementing]</p>
+                    <p>Designing and implementing enterprise-wide workload management system integrating data from multiple departments. Creating centralized dashboards providing real-time visibility of capacity, bottlenecks, and resource utilization.</p>
                     
                     <ul>
-                        <li>[Key initiative or achievement 1]</li>
-                        <li>[Key initiative or achievement 2]</li>
-                        <li>[Key initiative or achievement 3]</li>
-                        <li>[Key initiative or achievement 4]</li>
+                        <li>Centralized intake system for all work requests</li>
+                        <li>Automated prioritization based on business rules</li>
+                        <li>Real-time capacity planning and resource forecasting</li>
+                        <li>Executive dashboards showing organizational health</li>
                     </ul>
                     
                     <div class="impact-stats">
                         <div class="stat-box">
-                            <div class="stat-value">[XX]</div>
-                            <div class="stat-label">[Metric 1]</div>
+                            <div class="stat-value">In Progress</div>
+                            <div class="stat-label">Current Status</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-value">[XX]</div>
-                            <div class="stat-label">[Metric 2]</div>
+                            <div class="stat-value">Multi-Dept</div>
+                            <div class="stat-label">Scope</div>
                         </div>
                     </div>
                     
                     <div class="project-tags">
-                        <span class="tag">[Tag 1]</span>
-                        <span class="tag">[Tag 2]</span>
-                        <span class="tag">[Tag 3]</span>
-                        <span class="tag">[Tag 4]</span>
+                        <span class="tag">Enterprise Systems</span>
+                        <span class="tag">Data Integration</span>
+                        <span class="tag">Resource Planning</span>
+                        <span class="tag">Executive Reporting</span>
                     </div>
                 </div>
                 
                 <div class="project-visual">
-                    <img src="images/ssm-project.png" alt="SSM Initiative" class="project-image">
+                    <img src="images/ssm-project.png" alt="Workload Management System" class="project-image">
                 </div>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="portfolio-cta">
-            <h2>Impressed?</h2>
-            <p>These are just highlights from my portfolio. Let's discuss how I can bring this same drive for improvement to your organization.</p>
-            <div>
-                <a href="mailto:Joel@Whitford.uk" class="btn btn-primary">Get In Touch</a>
-                <a href="index.html" class="btn btn-secondary">Back to CV</a>
-            </div>
-        </section>
+        </div>
     </div>
 
     <footer>
@@ -956,29 +680,31 @@
     </footer>
 
     <script>
-        // Scroll reveal animation with fade out
-        const projectSections = document.querySelectorAll('.project-section');
-        
-        function checkReveal() {
-            projectSections.forEach(section => {
-                const windowHeight = window.innerHeight;
-                const elementTop = section.getBoundingClientRect().top;
-                const elementBottom = section.getBoundingClientRect().bottom;
-                const elementVisible = 150;
-                
-                // Add active class when in viewport
-                if (elementTop < windowHeight - elementVisible && elementBottom > elementVisible) {
-                    section.classList.add('active');
-                } else {
-                    // Remove active class when out of viewport
-                    section.classList.remove('active');
-                }
-            });
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        
-        window.addEventListener('scroll', checkReveal);
-        checkReveal(); // Check on load
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnBackground(event, modalId) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(modalId);
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
-    
 </body>
 </html>

@@ -7,720 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --network-rail-orange: #ff6600;
-            --network-rail-blue: #0066cc;
-            --dark-bg: #0a0e1a;
-            --card-bg: #141824;
-            --text-primary: #ffffff;
-            --text-secondary: #a8b2d1;
-            --accent: #ffd700;
-            --grid-color: rgba(255, 102, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated grid background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-color) 2px, transparent 2px),
-                linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
-            background-size: 50px 50px;
-            animation: gridPulse 4s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Floating particles */
-        .particle {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--network-rail-orange);
-            border-radius: 50%;
-            opacity: 0.3;
-            z-index: 1;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100px) translateX(50px); }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            padding: 4rem 0;
-            position: relative;
-        }
-
-        .hero-content {
-            flex: 1;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-mascot {
-            flex: 0 0 400px;
-            position: relative;
-            animation: slideInRight 1s ease-out, float 12s ease-in-out 1s infinite;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .mascot-container {
-            position: relative;
-            filter: drop-shadow(0 20px 60px rgba(255, 102, 0, 0.3));
-        }
-
-        .mascot-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle, rgba(255, 102, 0, 0.2) 0%, transparent 70%);
-            animation: pulse 3s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        .mascot-img {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            border: 2px solid var(--network-rail-orange);
-        }
-
-        .eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--network-rail-orange);
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            animation: fadeIn 1s ease-out 0.3s backwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--network-rail-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeIn 1s ease-out 0.5s backwards;
-        }
-
-        .subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            animation: fadeIn 1s ease-out 0.7s backwards;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            line-height: 1.8;
-            animation: fadeIn 1s ease-out 0.9s backwards;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            animation: fadeIn 1s ease-out 1.1s backwards;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .btn-primary {
-            background: var(--network-rail-orange);
-            color: white;
-            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--network-rail-orange);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 102, 0, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* Contact Info Pills */
-        .contact-pills {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            animation: fadeIn 1s ease-out 1.3s backwards;
-        }
-
-        .pill {
-            padding: 0.6rem 1.5rem;
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 102, 0, 0.3);
-            border-radius: 50px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .pill:hover {
-            background: rgba(255, 102, 0, 0.1);
-            border-color: var(--network-rail-orange);
-            transform: translateY(-2px);
-        }
-
-        .pill-icon {
-            color: var(--network-rail-orange);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            padding: 4rem 0;
-            margin: 4rem 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.2);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--network-rail-orange);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        /* Section */
-        .section {
-            padding: 6rem 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--network-rail-orange), transparent);
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 2rem auto 0;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .skill-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--network-rail-orange), var(--network-rail-blue));
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.2);
-        }
-
-        .skill-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--network-rail-orange);
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
-        .skill-list li {
-            padding: 0.5rem 0;
-            color: var(--text-secondary);
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .skill-list li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--network-rail-orange);
-            font-weight: bold;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding: 2rem 0;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, transparent, var(--network-rail-orange), transparent);
-        }
-
-        .timeline-item {
-            margin-bottom: 4rem;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: auto;
-            text-align: right;
-        }
-
-        .timeline-content {
-            width: 45%;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .timeline-content:hover {
-            transform: scale(1.05);
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.2);
-        }
-
-        .timeline-date {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--network-rail-orange);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-company {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .timeline-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--network-rail-orange);
-            border: 4px solid var(--dark-bg);
-            border-radius: 50%;
-            z-index: 10;
-            box-shadow: 0 0 20px var(--network-rail-orange);
-        }
-
-        /* Certifications */
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .cert-badge {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* New style for a centered tick mark at the bottom */
-        .cert-footer-icon {
-            display: flex;
-            justify-content: center; /* Centers the icon horizontally */
-            margin-top: 1rem; /* Adds separation from the text above */
-        }
-
-        .cert-status-icon {
-            /* Visual styling for the checkmark circle */
-            width: 30px;
-            height: 30px;
-            background: var(--network-rail-orange);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--dark-bg); /* Use a dark color for the checkmark symbol */
-            
-            /* Remove any absolute positioning */
-            position: static;
-        }
-
-        .cert-badge:hover {
-            transform: translateY(-5px);
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.2);
-        }
-
-        .cert-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text-primary);
-        }
-
-        /* Projects Showcase */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 102, 0, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--network-rail-orange);
-            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.3);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 2px solid var(--network-rail-orange);
-        }
-
-        .project-content {
-            padding: 2rem;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--network-rail-orange);
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(255, 102, 0, 0.1);
-            border: 1px solid rgba(255, 102, 0, 0.3);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--network-rail-orange);
-        }
-
-        /* Footer CTA */
-        .footer-cta {
-            text-align: center;
-            padding: 6rem 0;
-            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 102, 0, 0.1) 100%);
-            border-radius: 30px;
-            margin: 4rem 0;
-        }
-
-        .footer-cta h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-cta p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 0;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-mascot {
-                flex: 0 0 300px;
-                order: -1;
-            }
-
-            .hero-content {
-                align-items: center;
-            }
-
-            .cta-group, .contact-pills {
-                justify-content: center;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-content {
-                width: calc(100% - 60px);
-                margin-left: 60px !important;
-                text-align: left !important;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .section {
-                padding: 3rem 0;
-            }
-
-            .hero-mascot {
-                flex: 0 0 250px;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll reveal animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="index-page">
+    
+    <!-- Navigation - Hidden initially, shows on scroll -->
+    <nav id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Joel Whitford</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="mailto:Joel@Whitford.uk">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
     <!-- Floating particles -->
     <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
     <div class="particle" style="left: 85%; top: 40%; animation-delay: 2s;"></div>
@@ -734,11 +35,13 @@
             <div class="hero-content">
                 <div class="eyebrow">Understand Data | Drive Change</div>
                 <h1>Joel Whitford</h1>
-                <div class="subtitle">Data-Driven Change Professional</div>
+                <div class="subtitle">Change & Process Improvement Manager</div>
                 <p class="hero-description">
                     Nothing stays still - either we're improving or we're falling behind.<br><br>
-                    APMG Change Management certified with 10+ years at Network Rail, specializing in 
-                    digital transformation, process optimization, and stakeholder-driven delivery.
+                    I design, implement and improve business processes that eliminate waste, 
+                    enhance customer experience and drive operational efficiency.
+                    <br></br> 
+                    APMG Change Management certified with 10 years transforming how teams work.
                 </p>
                 
                 <div class="contact-pills">
@@ -775,20 +78,20 @@
         <section class="stats-section reveal">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Years at Network Rail</div>
+                    <div class="stat-number">🎯</div>
+                    <div class="stat-label">Outcome-Focused<br><span style="color: var(--network-rail-orange);">-</span><br>Not Activity-Focused</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">Team Members Managed</div>
+                    <div class="stat-number">🔧</div>
+                    <div class="stat-label">Hands-On Delivery<br><span style="color: var(--network-rail-orange);">-</span><br>Not Just Strategy</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">3 Year</div>
-                    <div class="stat-label">Backlog Cleared</div>
+                    <div class="stat-number">📊</div>
+                    <div class="stat-label">Data-Driven Decisions<br><span style="color: var(--network-rail-orange);">-</span><br>Not Gut Feel</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">61</div>
-                    <div class="stat-label">Problem Sites Identified</div>
+                    <div class="stat-number">🤝</div>
+                    <div class="stat-label">Pragmatic Solutions<br><span style="color: var(--network-rail-orange);">-</span><br>Not Ivory Tower Theory</div>
                 </div>
             </div>
         </section>
@@ -807,43 +110,43 @@
                     <div class="skill-icon">🎯</div>
                     <h3 class="skill-title">Change Delivery & Governance</h3>
                     <ul class="skill-list">
-                        <li>Change project planning & execution</li>
-                        <li>Requirements definition & stakeholder engagement</li>
-                        <li>Risk & issue management</li>
-                        <li>Benefits realisation & lessons learned</li>
+                        <li>End-to-end change project planning & execution</li>
+                        <li>Stakeholder engagement & requirements definition across multiple divisions</li>
+                        <li>Risk & issue identification, escalation & mitigation</li>
+                        <li>Benefits realisation tracking & post-implementation review</li>
                     </ul>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">⚙️</div>
-                    <h3 class="skill-title">Project & Process Improvement</h3>
+                    <h3 class="skill-title">Process Excellence & Improvement</h3>
                     <ul class="skill-list">
-                        <li>Continuous improvement initiatives</li>
-                        <li>Cross-functional team leadership</li>
-                        <li>Process mapping & redesign</li>
-                        <li>Data-driven decision support</li>
+                        <li>Process mapping & redesign using BPMN and gap analysis</li>
+                        <li>Continuous improvement initiatives (Lean principles)</li>
+                        <li>Cross-functional workshop facilitation & design thinking</li>
+                        <li>Business case development & performance metrics creation</li>
                     </ul>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">📊</div>
-                    <h3 class="skill-title">Digital & Analytical Capability</h3>
+                    <h3 class="skill-title">Digital Solutions & Automation</h3>
                     <ul class="skill-list">
-                        <li>Power BI dashboard development</li>
-                        <li>SharePoint solutions & automation</li>
-                        <li>Data modelling & reporting</li>
-                        <li>AI-powered analytics & GPT integration</li>
+                        <li>Automated reporting & dashboard development (Power BI)</li>
+                        <li>Workflow automation & digital collaboration platforms (SharePoint, Power Apps)</li>
+                        <li>Data modelling, cleansing & quality improvement</li>
+                        <li>AI-assisted process optimisation & documentation</li>
                     </ul>
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🚄</div>
-                    <h3 class="skill-title">Rail Operational Knowledge</h3>
+                    <div class="skill-icon">🏢</div>
+                    <h3 class="skill-title">Operational & Regulatory Expertise</h3>
                     <ul class="skill-list">
-                        <li>Safety-critical systems & communications</li>
-                        <li>Ellipse data management & reporting</li>
-                        <li>Asset management & maintenance cycles</li>
-                        <li>ISO 45001 aligned process design</li>
+                        <li>Safety-critical operational environments & compliance frameworks</li>
+                        <li>Enterprise system implementation & data governance (ERP/CMMS platforms)</li>
+                        <li>Asset management & maintenance planning cycles</li>
+                        <li>ISO 45001 process design & audit readiness</li>
                     </ul>
                 </div>
             </div>
@@ -854,7 +157,7 @@
             <div class="section-header">
                 <h2 class="section-title">Professional Journey</h2>
                 <p class="section-subtitle">
-                    My 10-year journey from apprentice to systems manager, driving digital transformation across Network Rail
+                   10 years transforming operational processes from frontline delivery to strategic change leadership
                 </p>
             </div>
 
@@ -868,10 +171,9 @@
                         <h3 class="timeline-title">Telecoms Engineering Technician Apprentice</h3>
                         <div class="timeline-company">Network Rail</div>
                         <p class="timeline-description">
-                            I trained at HMS Sultan in railway engineering with focus on safety and technical proficiency. 
-                            I spent two years working alongside the telecoms maintenance team, where I gained 
-                            extensive trackside experience performing fault repair and maintenance duties on 
-                            operational railway systems.
+                            Technical apprenticeship with 2 years hands-on trackside experience performing fault repair and maintenance on operational railway systems.
+                            <br><br>
+                            Built foundation in safety-critical environments, fault diagnosis and problem-solving under pressure.
                         </p>
                     </div>
                 </div>
@@ -883,10 +185,9 @@
                         <h3 class="timeline-title">Control Centre Technician (Telecoms)</h3>
                         <div class="timeline-company">Network Rail</div>
                         <p class="timeline-description">
-                            I was fortunate to graduate from my apprenticeship into my first role as a band 5 technician. 
-                            In this role, I ensured reliability of telecoms equipment at York Campus, a critical hub for train 
-                            signalling across the eastern region. Together with the team, I maintained high safety standards in fast-paced 
-                            operational environment.
+                            Selected for newly-created operational control role as part of first cohort. Helped establish processes, procedures and working practices for maintaining critical communications infrastructure across a regional network.
+                            <br><br>
+                            Operated in fast-paced, safety-critical environment managing system failures and ensuring business continuity.
                         </p>
                     </div>
                 </div>
@@ -898,10 +199,9 @@
                         <h3 class="timeline-title">Assistant Route Communications Engineer</h3>
                         <div class="timeline-company">Network Rail</div>
                         <p class="timeline-description">
-                            I helped manage a team of 100+ staff in maintaining safety-critical telecoms infrastructure.
-                            In this role I worked from the Scottish Borders down to London Kings Cross. 
-                            In this role I cleared a three-year backlog of incident reports and implemented a new compliance management system 
-                            aligned with ISO 45001, creating training templates still in use today.
+                            Supported compliance and process management for 100+ maintenance staff across Scotland to London corridor. Cleared 3-year backlog of safety incident investigations by redesigning incident management processes.
+                            <br><br>
+                            Implemented ISO 45001-aligned compliance system and created training framework still used as standard today.
                         </p>
                     </div>
                 </div>
@@ -910,12 +210,12 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-date">July 2023 – February 2025</div>
-                        <h3 class="timeline-title">Asset Engineer (Secondment)</h3>
+                        <h3 class="timeline-title">Asset Engineer</h3>
                         <div class="timeline-company">Network Rail</div>
                         <p class="timeline-description">
-                            I took a secondment as an Asset Engineer in the regional telecoms team. Here,Developed automated Power BI reporting tools, saving managers 1 hour per day on safety-critical 
-                            tasks. Applied Power Query analytics to identify 61 problem sites across eastern England, 
-                            enabling targeted maintenance interventions.
+                            Transitioned from operational delivery to data analytics and process automation. Built Power BI solutions eliminating 1 hour of manual reporting daily for management teams.
+                            <br><br>
+                            Used predictive analytics to identify 61 high-risk assets, enabling proactive maintenance strategy across regional portfolio.
                         </p>
                     </div>
                 </div>
@@ -927,9 +227,9 @@
                         <h3 class="timeline-title">Systems Support Manager</h3>
                         <div class="timeline-company">Network Rail</div>
                         <p class="timeline-description">
-                            Leading Ellipse, data, and process support for North and East region maintenance teams. 
-                            Delivering change initiatives that streamline reporting, improve data quality, and enhance 
-                            compliance across engineering, planning, and asset management operations.
+                            Managing enterprise system support for cross-disciplinary operations. Redesigning inefficient processes, building automated reporting solutions and establishing data governance standards.
+                            <br><br>
+                            Reducing manual administrative workload while improving compliance visibility and real-time operational insights across engineering and finance teams.
                         </p>
                     </div>
                 </div>
@@ -951,8 +251,8 @@
                     <div class="project-content">
                         <h3 class="project-title">SINCS Compliance System</h3>
                         <p class="project-description">
-                            Cleared 3-year backlog of Safety Related Telecoms Failures by implementing streamlined 
-                            incident control processes. Created training framework now used as standard for new engineer onboarding.
+                            Redesigned incident management process, eliminating 3-year backlog through stakeholder engagement, 
+                            process mapping and ISO 45001-aligned controls
                         </p>
                         <div class="project-tags">
                             <span class="tag">Process Design</span>
@@ -1124,6 +424,44 @@
         
         window.addEventListener('scroll', checkReveal);
         checkReveal(); // Check on load
+
+        // Show/hide navigation on scroll
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 600) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+        });
+
+    // Rest of your existing modal code...
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function closeModalOnBackground(event, modalId) {
+        if (event.target.classList.contains('modal')) {
+            closeModal(modalId);
+        }
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+    });
     </script>
 </body>
 </html>
